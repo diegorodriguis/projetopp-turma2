@@ -1,0 +1,236 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API de Acompanhamento de Projetos de Arquitetura",
+    "version": "1.0.0",
+    "description": "API para registro, acompanhamento e gerenciamento de projetos de arquitetura, clientes, reuniões, atualizações e documentos."
+  },
+  "paths": {
+    "/admin/register": {
+      "post": {
+        "summary": "Registrar administrador",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {"type": "object", "properties": {"username": {"type": "string"}, "password": {"type": "string"}, "email": {"type": "string", "format": "email"}}, "required": ["username", "password", "email"]}
+            }
+          }
+        },
+        "responses": {
+          "201": {"description": "Administrador registrado"},
+          "409": {"description": "Administrador já existe"}
+        }
+      }
+    },
+    "/admin/login": {
+      "post": {
+        "summary": "Login administrador",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {"type": "object", "properties": {"username": {"type": "string"}, "password": {"type": "string"}, "email": {"type": "string", "format": "email"}}, "required": ["username", "password", "email"]}
+            }
+          }
+        },
+        "responses": {
+          "200": {"description": "Token JWT"},
+          "401": {"description": "Credenciais inválidas"}
+        }
+      }
+    },
+    "/client/register": {
+      "post": {
+        "summary": "Registrar cliente",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {"type": "object", "properties": {"name": {"type": "string"}, "email": {"type": "string"}, "password": {"type": "string"}}, "required": ["name", "email", "password"]}
+            }
+          }
+        },
+        "responses": {
+          "201": {"description": "Cliente registrado"},
+          "409": {"description": "Cliente já existe"}
+        }
+      }
+    },
+    "/client/login": {
+      "post": {
+        "summary": "Login cliente",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {"type": "object", "properties": {"email": {"type": "string"}, "password": {"type": "string"}}, "required": ["email", "password"]}
+            }
+          }
+        },
+        "responses": {
+          "200": {"description": "Token JWT"},
+          "401": {"description": "Credenciais inválidas"}
+        }
+      }
+    },
+    "/client": {
+      "get": {
+        "summary": "Buscar clientes",
+        "responses": {
+          "200": {"description": "Lista de clientes"}
+        }
+      }
+    },
+    "/client/{id}": {
+      "get": {
+        "summary": "Buscar dados do cliente",
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "integer"}}],
+        "responses": {
+          "200": {"description": "Dados do cliente"},
+          "404": {"description": "Cliente não encontrado"}
+        }
+      }
+    },
+    "/project": {
+      "post": {
+        "summary": "Cadastrar projeto",
+        "security": [{"bearerAuth": []}],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {"type": "object", "properties": {"clientId": {"type": "integer"}, "name": {"type": "string"}, "stages": {"type": "array", "items": {"type": "string"}}}, "required": ["clientId", "name"]}
+            }
+          }
+        },
+        "responses": {
+          "201": {"description": "Projeto criado"},
+          "404": {"description": "Cliente não encontrado"}
+        }
+      }
+    },
+    "/project/client/{clientId}": {
+      "get": {
+        "summary": "Buscar projetos do cliente",
+        "security": [{"bearerAuth": []}],
+        "parameters": [{"name": "clientId", "in": "path", "required": true, "schema": {"type": "integer"}}],
+        "responses": {
+          "200": {"description": "Lista de projetos"}
+        }
+      }
+    },
+    "/project/progress/{id}": {
+      "get": {
+        "summary": "Consultar andamento do projeto",
+        "security": [{"bearerAuth": []}],
+        "parameters": [{"name": "id", "in": "path", "required": true, "schema": {"type": "integer"}}],
+        "responses": {
+          "200": {"description": "Dados de andamento do projeto"},
+          "404": {"description": "Projeto não encontrado"}
+        }
+      }
+    },
+    "/meeting": {
+      "post": {
+        "summary": "Agendar reunião",
+        "security": [{"bearerAuth": []}],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {"type": "object", "properties": {"projectId": {"type": "integer"}, "date": {"type": "string", "format": "date-time"}, "notes": {"type": "string"}}, "required": ["projectId", "date"]}
+            }
+          }
+        },
+        "responses": {
+          "201": {"description": "Reunião agendada"},
+          "404": {"description": "Projeto não encontrado"}
+        }
+      }
+    },
+    "/meeting/project/{projectId}": {
+      "get": {
+        "summary": "Consultar reuniões do projeto",
+        "security": [{"bearerAuth": []}],
+        "parameters": [{"name": "projectId", "in": "path", "required": true, "schema": {"type": "integer"}}],
+        "responses": {
+          "200": {"description": "Lista de reuniões"}
+        }
+      }
+    },
+    "/update": {
+      "post": {
+        "summary": "Registrar atualização do projeto",
+        "security": [{"bearerAuth": []}],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {"type": "object", "properties": {"projectId": {"type": "integer"}, "image": {"type": "string"}, "document": {"type": "string"}, "note": {"type": "string"}}, "required": ["projectId"]}
+            }
+          }
+        },
+        "responses": {
+          "201": {"description": "Atualização registrada"},
+          "404": {"description": "Projeto não encontrado"}
+        }
+      }
+    },
+    "/update/project/{projectId}": {
+      "get": {
+        "summary": "Consultar atualizações do projeto",
+        "security": [{"bearerAuth": []}],
+        "parameters": [{"name": "projectId", "in": "path", "required": true, "schema": {"type": "integer"}}],
+        "responses": {
+          "200": {"description": "Lista de atualizações"}
+        }
+      }
+    },
+    "/document": {
+      "post": {
+        "summary": "Adicionar documento ao projeto",
+        "security": [{"bearerAuth": []}],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {"type": "object", "properties": {"projectId": {"type": "integer"}, "name": {"type": "string"}, "url": {"type": "string"}}, "required": ["projectId", "name", "url"]}
+            }
+          }
+        },
+        "responses": {
+          "201": {"description": "Documento adicionado"},
+          "404": {"description": "Projeto não encontrado"}
+        }
+      }
+    },
+    "/document/project/{projectId}": {
+      "get": {
+        "summary": "Consultar documentos do projeto",
+        "security": [{"bearerAuth": []}],
+        "parameters": [{"name": "projectId", "in": "path", "required": true, "schema": {"type": "integer"}}],
+        "responses": {
+          "200": {"description": "Lista de documentos"}
+        }
+      }
+    },
+    "/api-docs": {
+      "get": {
+        "summary": "Renderizar documentação Swagger",
+        "responses": {
+          "200": {"description": "Swagger UI"}
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
