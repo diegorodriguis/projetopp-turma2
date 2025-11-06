@@ -39,6 +39,18 @@
           "401": {"description": "Credenciais inválidas"}
         }
       }
+      },
+      "/admin/{id}": {
+        "delete": {
+          "summary": "Excluir administrador",
+          "parameters": [
+            {"name": "id", "in": "path", "required": true, "schema": {"type": "integer"}}
+          ],
+          "responses": {
+            "200": {"description": "Administrador excluído com sucesso"},
+            "404": {"description": "Administrador não encontrado"}
+          }
+        }
     },
     "/client/register": {
       "post": {
@@ -186,6 +198,18 @@
           "200": {"description": "Lista de atualizações"}
         }
       }
+      },
+      "/update/{id}": {
+        "delete": {
+          "summary": "Excluir atualização (foto, documento, observação de obra)",
+          "parameters": [
+            {"name": "id", "in": "path", "required": true, "schema": {"type": "integer"}}
+          ],
+          "responses": {
+            "200": {"description": "Atualização excluída com sucesso"},
+            "404": {"description": "Atualização não encontrada"}
+          }
+        }
     },
     "/document": {
       "post": {
@@ -214,6 +238,18 @@
           "200": {"description": "Lista de documentos"}
         }
       }
+      },
+      "/document/{id}": {
+        "delete": {
+          "summary": "Excluir documento do projeto",
+          "parameters": [
+            {"name": "id", "in": "path", "required": true, "schema": {"type": "integer"}}
+          ],
+          "responses": {
+            "200": {"description": "Documento excluído com sucesso"},
+            "404": {"description": "Documento não encontrado"}
+          }
+        }
     },
     "/api-docs": {
       "get": {

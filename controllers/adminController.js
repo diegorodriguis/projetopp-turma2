@@ -1,3 +1,4 @@
+
 const db = require('../model/db');
 const jwt = require('jsonwebtoken');
 const { SECRET_KEY } = require('../service/authMiddleware');
@@ -20,4 +21,14 @@ exports.loginAdmin = (req, res) => {
   }
   const token = jwt.sign({ id: admin.id, role: 'admin' }, SECRET_KEY, { expiresIn: '8h' });
   res.json({ token });
+};
+
+exports.deleteAdmin = (req, res) => {
+  const id = parseInt(req.params.id);
+  const index = db.admins.findIndex(a => a.id === id);
+  if (index === -1) {
+    return res.status(404).json({ message: 'Administrador não encontrado' });
+  }
+  db.admins.splice(index, 1);
+  res.json({ message: 'Administrador excluído com sucesso' });
 };
