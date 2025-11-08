@@ -20,7 +20,7 @@ jobs:
         run: npm install
 
       - name: Iniciando a API
-        run: npm start
+        run: npm start &
 
       - name: Executar os testes
         run: npm test
