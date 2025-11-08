@@ -1,112 +1,146 @@
+yaml
+yaml
+bash
+
 # 🏗️ API de Acompanhamento de Projetos de Arquitetura
 
 <img src="https://cdn-icons-png.flaticon.com/512/3270/3270910.png" width="120" alt="Arquitetura API" align="right"/>
 
 ## 📋 Descrição
-API REST para **registro, acompanhamento e gerenciamento de projetos de arquitetura**, incluindo clientes, reuniões, atualizações e documentos.
+API REST para **registro, acompanhamento e gerenciamento de projetos de arquitetura**: clientes, reuniões, atualizações e documentos.
 
-Ela permite o **controle do progresso de projetos**, **agendamento de reuniões**, **galeria de atualizações** (com fotos e observações) e **acesso a documentos** de forma centralizada e segura.
+Permite controle de progresso, agendamento de reuniões, galeria de atualizações (fotos/observações) e acesso centralizado a documentos.
 
 ---
 
-## 🚀 Funcionalidades Principais
-- 👩‍💼 Registro e login de **administradores**
-- 🧑‍💻 Registro e login de **clientes**
-- 🔍 **Busca** de clientes e dados detalhados
-- 🏗️ **Cadastro e gerenciamento de projetos** vinculados a clientes
-- 📈 Consulta de **andamento do projeto** (percentual, etapas e prazos)
-- 📅 **Registro e consulta de reuniões** agendadas
-- 🖼️ **Atualizações de projeto** (fotos, observações, documentos)
-- 📂 **Gerenciamento de documentos**
-- ❌ Exclusão de administradores, documentos e atualizações
+## 🚀 Principais Funcionalidades
+- Registro e login de administradores e clientes
+- Cadastro e gerenciamento de projetos
+- Consulta de andamento do projeto
+- Registro e consulta de reuniões
+- Atualizações de projeto (fotos, observações, docs)
+- Gerenciamento de documentos
+- Exclusão de administradores, documentos e atualizações
+
+---
+
+## ⚙️ Como rodar o projeto
+
+1. **Instale as dependências:**
+   ```bash
+   npm install
+   ```
+2. **Inicie o servidor:**
+   ```bash
+   npm start
+   ```
+3. **Acesse a documentação Swagger:**
+   [http://localhost:3000/swagger](http://localhost:3000/swagger)
+
+**Observação:** O banco de dados é em memória, os dados são perdidos ao reiniciar o servidor.
+
+---
+
+## 🧪 Testes automatizados
+
+Execute todos os testes automatizados de API com:
+```bash
+npm test
+```
+
+---
+
+## 📦 Dependências principais
+
+- express
+- jsonwebtoken
+- swagger-ui-express
+
+Para desenvolvimento/testes:
+- mocha
+- chai
+- supertest
+- @faker-js/faker
 
 ---
 
 ## 🔐 Autenticação
-- **Administradores** → acesso total à API  
-- **Clientes** → acesso restrito ao próprio projeto, reuniões, galeria e documentos  
-- Implementação via **JWT (Bearer Token)** através de middleware
+
+- **Administradores:** acesso total à API
+- **Clientes:** acesso restrito ao próprio projeto, reuniões, galeria e documentos
+- Implementação via **JWT (Bearer Token)**
+
+---
+
+## 🗂️ Estrutura do Projeto
+
+```
+projetopp-turma2/
+├── app.js
+├── controllers/
+├── helpers/
+├── model/
+├── resources/
+├── routes/
+├── service/
+└── test/
+```
+
+---
+
+## 🧭 Principais rotas da API
+
+### Autenticação/Admin
+- `POST /admin/register` — Cadastro de administrador
+- `POST /admin/login` — Login de administrador
+- `DELETE /admin/:id` — Remove administrador
+
+### Autenticação/Cliente
+- `POST /client/register` — Cadastro de cliente
+- `POST /client/login` — Login de cliente
+- `GET /client/` — Lista clientes
+- `GET /client/:id` — Detalhes do cliente
+
+### Projetos
+- `POST /project/` — Cria projeto
+- `GET /project/client/:clientId` — Lista projetos de um cliente
+- `GET /project/progress/:id` — Progresso do projeto
+
+### Reuniões
+- `POST /meeting/` — Agenda reunião
+- `GET /meeting/project/:projectId` — Lista reuniões do projeto
+
+### Atualizações
+- `POST /update/` — Adiciona atualização
+- `GET /update/project/:projectId` — Lista atualizações do projeto
+- `DELETE /update/:id` — Remove atualização
+
+### Documentos
+- `POST /document/` — Adiciona documento
+- `GET /document/project/:projectId` — Lista documentos do projeto
+- `DELETE /document/:id` — Remove documento
 
 ---
 
 ## 🧭 Documentação Swagger
 
-A documentação completa dos endpoints está disponível em:
+Acesse a documentação interativa em:
+[http://localhost:3000/swagger](http://localhost:3000/swagger)
 
-➡️ **[http://localhost:3000/swagger](http://localhost:3000/swagger)**  
-
-O arquivo de configuração está localizado em:
-resources/swagger.json
-
-yaml
-Copy code
-
-📸 *Exemplo da interface Swagger:*
-![Swagger UI Example](https://upload.wikimedia.org/wikipedia/commons/a/ab/Swagger_UI.png)
+Arquivo de configuração: `resources/swagger.json`
 
 ---
 
-## 🗂️ Estrutura do Projeto
-project-root/
-│
-├── routes/ # Definições das rotas da API
-├── controllers/ # Lógica dos endpoints
-├── service/ # Serviços e middlewares (ex: autenticação JWT)
-├── model/ # Modelos e banco de dados em memória
-└── resources/ # Documentação Swagger
+## 🧩 Tecnologias
 
-yaml
-Copy code
+- Node.js
+- Express.js
+- Swagger UI
+- JWT (JSON Web Token)
 
 ---
 
-## ⚙️ Como Executar o Projeto
+## 📬 Contato
 
-1. **Instale as dependências:**
-   ```bash
-   npm install express body-parser swagger-ui-express jsonwebtoken
-Inicie o servidor:
-
-bash
-Copy code
-npm start
-Acesse a documentação:
-http://localhost:3000/swagger
-
-💾 Observações
-O banco de dados é em memória, portanto os dados são perdidos ao reiniciar o servidor.
-
-Para autenticação, utilize o token JWT retornado nos endpoints de login.
-
-🧱 Exemplo de Fluxo de Uso
-🔐 Administrador faz login
-
-🧾 Cadastra um cliente
-
-🏗️ Cria um novo projeto vinculado
-
-📅 Agenda reuniões e adiciona atualizações
-
-🖼️ Cliente acessa seu painel e acompanha o progresso
-
-🖼️ Prévia Visual (Sugestão)
-Substitua por capturas reais do seu sistema.
-
-Tela	Exemplo
-Painel do Projeto	
-Galeria de Atualizações	
-
-🧩 Tecnologias Utilizadas
-Node.js
-
-Express.js
-
-Swagger UI
-
-JWT (JSON Web Token) para autenticação
-
-Body-parser para tratamento de requisições
-
-📬 Contato
-📧 Seu Nome — seu.email@exemplo.com
-🌐 Seu Portfólio ou GitHub
+Diego Rodrigues — diego.rodriguestti@gmail.com
+[Seu Portfólio ou GitHub](https://github.com/diegorodriguis)
