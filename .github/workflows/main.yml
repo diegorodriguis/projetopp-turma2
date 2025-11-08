@@ -1,0 +1,27 @@
+name: CI API Portifolio
+
+# gatilhos
+on:
+  workflow_dispatch:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    env:
+      BASE_URL: 'http://localhost:3000'
+
+    steps:
+
+      - name: Checkout do Repositorio
+        uses: actions/checkout@v4
+
+      - name: Instalando as dependencias
+        run: npm install
+
+      - name: Iniciando a API
+        run: npm start
+
+      - name: Executar os testes
+        run: npm test
+        
