@@ -1,7 +1,3 @@
-yaml
-yaml
-bash
-
 # 🏗️ API de Acompanhamento de Projetos de Arquitetura
 
 <img src="https://cdn-icons-png.flaticon.com/512/3270/3270910.png" width="120" alt="Arquitetura API" align="right"/>
